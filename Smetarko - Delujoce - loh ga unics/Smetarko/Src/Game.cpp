@@ -56,7 +56,6 @@ void Game::handleEvents()
 void Game::update()
 {
  	player->Update();
-
 }
 
 void Game::render()
