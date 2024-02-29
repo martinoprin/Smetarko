@@ -34,7 +34,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	}
 
 
-	player = new GameObject("assets/player.png",100 ,100);
+	player = new GameObject("assets/player.png",0 ,670); //main character
 }
 
 void Game::handleEvents()
