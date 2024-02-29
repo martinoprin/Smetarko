@@ -1,1 +1,0 @@
-# Smetarko - Delujoc - tle loh zafukas
