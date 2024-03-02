@@ -1,24 +1,24 @@
 #include "GameObject.h"
 #include "TextureManager.h"
 
-GameObject::GameObject(const char* textureSheet, int x, int y) {
+GameObject::GameObject(const char* textureSheet) {
     objTexture = TextureManager::LoadTexture(textureSheet);
-    xpos = x;
-    ypos = y;
-    isFlipped = false; // Initially not flipped
+    xpos = rand()%247 * 5;   //246 * 5 = 1230     1280 - 50 = 1230
+    ypos = rand()%135 * 5;   //134 * 5 = 670      720 - 50 = 670
+    isFlipped = true;
 }
 
 void GameObject::Update() {
     const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
-    if (currentKeyStates[SDL_SCANCODE_W] && ypos != 0)
+    if (currentKeyStates[SDL_SCANCODE_W] && ypos > 0)
         ypos -= 5; // Up
-    if (currentKeyStates[SDL_SCANCODE_S] && ypos != 670)
+    if (currentKeyStates[SDL_SCANCODE_S] && ypos < 670)
         ypos += 5; // Down
-    if (currentKeyStates[SDL_SCANCODE_A] && xpos != 0) {
+    if (currentKeyStates[SDL_SCANCODE_A] && xpos > 0) {
         xpos -= 5; // Left
         isFlipped = false;
     }
-    if (currentKeyStates[SDL_SCANCODE_D] && xpos != 1230) {
+    if (currentKeyStates[SDL_SCANCODE_D] && xpos < 1230) {
         xpos += 5; // Right
         isFlipped = true;
     }

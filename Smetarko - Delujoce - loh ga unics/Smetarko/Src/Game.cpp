@@ -2,6 +2,8 @@
 #include "TextureManager.h"
 #include "GameObject.h"
 
+
+
 GameObject* player;
 
 SDL_Renderer* Game::renderer = nullptr;
@@ -32,9 +34,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 
 		isRunning = true;
 	}
-
-
-	player = new GameObject("assets/player.png",0 ,670); //main character
+	player = new GameObject("assets/player.png"); //main character
 }
 
 void Game::handleEvents()
