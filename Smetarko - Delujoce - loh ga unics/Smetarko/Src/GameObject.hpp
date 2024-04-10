@@ -1,11 +1,23 @@
 #include "GameObject.h"
 #include "TextureManager.h"
 
-GameObject::GameObject(const char* textureSheet) {
+GameObject::GameObject(const char* textureSheet, bool type) {
     objTexture = TextureManager::LoadTexture(textureSheet);
-    xpos = rand()%161 * 5;   //160 * 5 = 800      850 - 50 = 800
-    ypos = rand()%135 * 5;   //134 * 5 = 670      720 - 50 = 670
-    isFlipped = true;
+    if(type)
+    {
+        xpos = rand() % 76 * 5 + 855;   //160 * 5 = 800      850 - 50 = 800
+		ypos = rand() % 135 * 5;   //134 * 5 = 670      720 - 50 = 670
+		isFlipped = true;
+    }
+
+
+    
+    else if (!type) 
+    {
+        xpos = rand() % 161 * 5;   //160 * 5 = 800      850 - 50 = 800
+        ypos = rand() % 135 * 5;   //134 * 5 = 670      720 - 50 = 670
+        isFlipped = true;
+    }
 }
 
 void GameObject::UpdateMovement() {
@@ -46,7 +58,7 @@ void GameObject::UpdateMovement() {
     destRect.w = srcRect.w / 2;
     destRect.h = srcRect.h / 2;
 
-    //std::cout << "x:" << xpos << "\t";
+    std::cout << "x:" << xpos << "\t";
     //std::cout << "y:" << ypos << std::endl;
 }
 
@@ -62,7 +74,7 @@ void GameObject::Update() {
     destRect.h = srcRect.h / 2;
 
     //std::cout << xpos << std::endl;
-   // std::cout << ypos << std::endl;
+    //std::cout << ypos << std::endl;
 }
 
 

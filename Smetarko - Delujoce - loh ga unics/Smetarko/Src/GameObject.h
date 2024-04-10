@@ -17,7 +17,7 @@ private:
 	SDL_Rect srcRect{}, destRect{};
 
 public:
-	GameObject(const char* textureSheet);
+	GameObject(const char* textureSheet, bool type);
 	~GameObject(){}
 
 	void UpdateMovement();

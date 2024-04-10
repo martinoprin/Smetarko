@@ -5,8 +5,9 @@
 
 
 GameObject* player;
-GameObject* enemy;
+//GameObject* enemy;
 std::vector<GameObject*> enemies;
+std::vector<GameObject*> trash;
 
 
 
@@ -38,11 +39,14 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 
 		isRunning = true;
 	}
-	player = new GameObject("assets/player.png"); //main character
-	enemy = new GameObject("assets/enemy.png"); //enemy character
+	player = new GameObject("assets/player.png", 0); //main character
+	//enemy = new GameObject("assets/enemy.png", 1); //enemy character
 
 	for(int i = 0; i < 10; i++) {
-		enemies.push_back(new GameObject("assets/trash.png"));
+		trash.push_back(new GameObject("assets/trash.png", 0));
+	}
+	for (int i = 0; i < 5; i++) {
+		enemies.push_back(new GameObject("assets/enemy.png", 1));
 	}
 }
 
@@ -65,8 +69,12 @@ void Game::handleEvents()
 void Game::update()
 {
 	player->UpdateMovement();
-	enemy->Update();
-	for(int i = 0; i < enemies.size(); i++) {
+	//enemy->Update();
+
+	for(int i = 0; i < trash.size(); i++) {
+		trash[i]->Update();
+	}
+	for (int i = 0; i < enemies.size(); i++) {
 		enemies[i]->Update();
 	}
 }
@@ -75,10 +83,14 @@ void Game::render()
 {
 	SDL_RenderClear(renderer);
 	player->Render();
-	enemy->Render();
-for(int i = 0; i < enemies.size(); i++) {
-		enemies[i]->Render();
-	}
+	//enemy->Render();
+
+	for(int i = 0; i < trash.size(); i++) 
+	{trash[i]->Render();}
+
+	for (int i = 0; i < enemies.size(); i++)
+	{enemies[i]->Render();}
+
 	SDL_RenderPresent(renderer);
 }
 
