@@ -5,6 +5,8 @@
 
 
 GameObject* player;
+GameObject* enemy;
+
 
 SDL_Renderer* Game::renderer = nullptr;
 
@@ -35,6 +37,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 		isRunning = true;
 	}
 	player = new GameObject("assets/player.png"); //main character
+	enemy = new GameObject("assets/enemy.png"); //enemy character
 }
 
 void Game::handleEvents()
@@ -55,13 +58,15 @@ void Game::handleEvents()
 
 void Game::update()
 {
- 	player->Update();
+	player->UpdateMovement();
+	enemy->Update();
 }
 
 void Game::render()
 {
 	SDL_RenderClear(renderer);
 	player->Render();
+	enemy->Render();
 	SDL_RenderPresent(renderer);
 }
 

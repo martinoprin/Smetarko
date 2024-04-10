@@ -1,2 +1,2 @@
 # Smetar
-push ne dela
+
