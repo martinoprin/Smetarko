@@ -1,11 +1,13 @@
 #include "Game.h"
 #include "TextureManager.h"
 #include "GameObject.h"
-
+#include "vector"
 
 
 GameObject* player;
 GameObject* enemy;
+std::vector<GameObject*> enemies;
+
 
 
 SDL_Renderer* Game::renderer = nullptr;
@@ -38,6 +40,10 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	}
 	player = new GameObject("assets/player.png"); //main character
 	enemy = new GameObject("assets/enemy.png"); //enemy character
+
+	for(int i = 0; i < 10; i++) {
+		enemies.push_back(new GameObject("assets/enemy.png"));
+	}
 }
 
 void Game::handleEvents()
@@ -60,6 +66,9 @@ void Game::update()
 {
 	player->UpdateMovement();
 	enemy->Update();
+	for(int i = 0; i < enemies.size(); i++) {
+		enemies[i]->Update();
+	}
 }
 
 void Game::render()
@@ -67,6 +76,9 @@ void Game::render()
 	SDL_RenderClear(renderer);
 	player->Render();
 	enemy->Render();
+for(int i = 0; i < enemies.size(); i++) {
+		enemies[i]->Render();
+	}
 	SDL_RenderPresent(renderer);
 }
 
