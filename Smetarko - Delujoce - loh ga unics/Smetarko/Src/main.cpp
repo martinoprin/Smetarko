@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
 		{
 			SDL_Delay(frameDelay - frameTime);
 		}
-		//std::cout << "FPS: " << 1000 / (SDL_GetTicks() - frameStart) << "\t  ";
+		std::cout << "FPS: " << 1000 / (SDL_GetTicks() - frameStart) << "\t  ";
 	}
 
 	game->clean();

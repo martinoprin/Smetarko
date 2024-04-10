@@ -42,7 +42,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 	enemy = new GameObject("assets/enemy.png"); //enemy character
 
 	for(int i = 0; i < 10; i++) {
-		enemies.push_back(new GameObject("assets/enemy.png"));
+		enemies.push_back(new GameObject("assets/trash.png"));
 	}
 }
 

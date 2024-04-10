@@ -46,7 +46,7 @@ void GameObject::UpdateMovement() {
     destRect.w = srcRect.w / 2;
     destRect.h = srcRect.h / 2;
 
-    std::cout << "x:" << xpos << "\t";
+    //std::cout << "x:" << xpos << "\t";
     //std::cout << "y:" << ypos << std::endl;
 }
 
@@ -61,8 +61,8 @@ void GameObject::Update() {
     destRect.w = srcRect.w / 2;
     destRect.h = srcRect.h / 2;
 
-    std::cout << xpos << std::endl;
-    std::cout << ypos << std::endl;
+    //std::cout << xpos << std::endl;
+   // std::cout << ypos << std::endl;
 }
 
 
