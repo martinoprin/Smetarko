@@ -80,15 +80,15 @@ void GameObject::Update() {
 }
 
 void GameObject::UpdatePesek() {
-    srcRect.h = 100;
-    srcRect.w = 100;
+    srcRect.h = 720;
+    srcRect.w = 425;
     srcRect.x = 0;
     srcRect.y = 0;
 
-    destRect.x = xpos;
-    destRect.y = ypos;
-    destRect.w = srcRect.w / 2;
-    destRect.h = srcRect.h / 2;
+    destRect.x = 880; //855+25
+    destRect.y = 0;
+    destRect.w = srcRect.w;
+    destRect.h = srcRect.h;
 }
 
 

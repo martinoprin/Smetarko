@@ -40,7 +40,7 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 		isRunning = true;
 	}
 	player = new GameObject("assets/player.png", 0); 
-	pesek = new GameObject("assets/pesek.png", 2);
+	pesek = new GameObject("assets/pesek2.png", 2);
 
 	for(int i = 0; i < 10; i++) {
 		trash.push_back(new GameObject("assets/trash.png", 0));
