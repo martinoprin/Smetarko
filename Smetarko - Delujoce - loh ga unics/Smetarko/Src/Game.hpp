@@ -6,7 +6,6 @@
 
 GameObject* player;
 GameObject* pesek;
-//GameObject* enemy;
 std::vector<GameObject*> enemies;
 std::vector<GameObject*> trash;
 
@@ -40,9 +39,8 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 
 		isRunning = true;
 	}
-	player = new GameObject("assets/player.png", 0); //main character
-	//enemy = new GameObject("assets/enemy.png", 1); //enemy character
-	pesek = new GameObject("assets/pesek.png", 2); //trash character
+	player = new GameObject("assets/player.png", 0); 
+	pesek = new GameObject("assets/pesek.png", 2);
 
 	for(int i = 0; i < 10; i++) {
 		trash.push_back(new GameObject("assets/trash.png", 0));
@@ -74,19 +72,22 @@ void Game::update()
 	player->UpdateMovement();
 	pesek->UpdatePesek();
 
-	for (int i = 0; i < trash.size(); i++) {
+	for (int i = trash.size() - 1; i >= 0; i--) {
 		trash[i]->Update();
 		if (checkCollision(player->getRect(), trash[i]->getRect())) {
-			std::cout << 1;
+			delete trash[i];
+			trash.erase(trash.begin() + i);
 		}
 	}
 	for (int i = 0; i < enemies.size(); i++) {
 		enemies[i]->Update();
 		if (checkCollision(player->getRect(), enemies[i]->getRect())) {
-			std::cout << 2;
+			delete enemies[i];
+			enemies.erase(enemies.begin() + i);
 		}
 	}
 }
+
 
 
 void Game::render()
@@ -94,7 +95,6 @@ void Game::render()
 	SDL_RenderClear(renderer);
 	pesek->Render();
 	player->Render();
-	//enemy->Render();
 
 	for(int i = 0; i < trash.size(); i++) 
 	{trash[i]->Render();}
