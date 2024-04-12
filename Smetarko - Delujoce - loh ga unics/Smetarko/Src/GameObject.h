@@ -20,14 +20,18 @@ public:
 	GameObject(const char* textureSheet, bool type);
 	~GameObject(){}
 
+	SDL_Rect getRect()
+	{return destRect;}
+
+
 	void UpdateMovement();
+	void UpdatePesek();
 	void Update();
 	void Render();
 
 	bool isSea() const { return isSea_; }
 	void SetIsSea(bool sea) { isSea_ = sea; }
 
-	bool CheckCollision(GameObject* obj);
-
-
 };
+
+bool checkCollision(SDL_Rect a, SDL_Rect b);
