@@ -2,6 +2,8 @@
 
 Game* game = nullptr;
 
+
+
 int main(int argc, char* argv[])
 {
 	srand(time(NULL));
@@ -10,6 +12,8 @@ int main(int argc, char* argv[])
 
 	Uint32 frameStart;
 	int frameTime;
+
+
 
 
 	game = new Game();

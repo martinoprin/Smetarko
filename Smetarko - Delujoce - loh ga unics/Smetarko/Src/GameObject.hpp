@@ -1,7 +1,7 @@
 #include "GameObject.h"
 #include "TextureManager.h"
 
-GameObject::GameObject(const char* textureSheet, bool type) {
+GameObject::GameObject(const char* textureSheet, int type) {
     objTexture = TextureManager::LoadTexture(textureSheet);
     if(type == 1)
     {
@@ -20,6 +20,9 @@ GameObject::GameObject(const char* textureSheet, bool type) {
         xpos = 1230;
         ypos = 0;
     }
+    smer = rand() % 4;
+    cas = rand() % 100;
+
 }
 
 void GameObject::UpdateMovement() {
@@ -64,7 +67,64 @@ void GameObject::UpdateMovement() {
     //std::cout << "y:" << ypos << std::endl;
 }
 
-void GameObject::Update() {
+void GameObject::Update() { //enemy movement
+
+
+    if (cas != 0) {
+        switch (smer) {
+
+        case 0:
+            if (ypos > 0)
+                ypos -= 1;
+            break;
+
+        case 1:
+            if (ypos < 670)
+                ypos += 1;
+            break;
+
+        case 2:
+            if (xpos > 875) {
+                xpos -= 1;
+                isFlipped = false;
+            }
+            break;
+
+        case 3:
+            if (xpos < 1230) {
+                xpos += 1;
+                isFlipped = true;
+            }
+            break;
+        }
+        cas--;
+    }
+    else {
+        smer = rand() % 4;
+        cas = rand() % 100;
+    }
+    std::cout << xpos << std::endl;
+    //std::cout << cas << std::endl;
+
+    srcRect.h = 100;
+    srcRect.w = 100;
+    srcRect.x = 0;
+    srcRect.y = 0;
+
+    destRect.x = xpos;
+    destRect.y = ypos;
+    destRect.w = srcRect.w / 2;
+    destRect.h = srcRect.h / 2;
+
+    //std::cout << xpos << std::endl;
+    //std::cout << ypos << std::endl;
+}
+
+void GameObject::UpdateSmeti() {
+
+    xpos -= 0.5; // ce je ena gre dol
+
+
     srcRect.h = 100;
     srcRect.w = 100;
     srcRect.x = 0;

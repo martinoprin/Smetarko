@@ -9,6 +9,9 @@ GameObject* pesek;
 std::vector<GameObject*> enemies;
 std::vector<GameObject*> trash;
 
+//int smer = rand() % 4; // nastavimo v katermo smer se premika enemy
+
+//int cas = rand() % 100; // koliko casa se bo enemy premikal v doloceno smer
 
 
 SDL_Renderer* Game::renderer = nullptr;
@@ -73,7 +76,7 @@ void Game::update()
 	pesek->UpdatePesek();
 
 	for (int i = trash.size() - 1; i >= 0; i--) {
-		trash[i]->Update();
+		trash[i]->UpdateSmeti();
 		if (checkCollision(player->getRect(), trash[i]->getRect())) {
 			delete trash[i];
 			trash.erase(trash.begin() + i);

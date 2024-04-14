@@ -16,8 +16,11 @@ private:
 	SDL_Texture* objTexture;
 	SDL_Rect srcRect{}, destRect{};
 
+	int smer;
+	int cas;
+
 public:
-	GameObject(const char* textureSheet, bool type);
+	GameObject(const char* textureSheet, int type);
 	~GameObject(){}
 
 	SDL_Rect getRect()
@@ -25,6 +28,7 @@ public:
 
 
 	void UpdateMovement();
+	void UpdateSmeti();
 	void UpdatePesek();
 	void Update();
 	void Render();
