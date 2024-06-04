@@ -16,14 +16,17 @@ public:
 	void handleEvents();
 	void update();
 	bool running() { return isRunning; }
+	bool GetPaused() { return paused; }
 	void render();
 	void clean();
 
 	static SDL_Renderer* renderer;
 
 private:
+	char name[20] = "Vegovec";
 
 	bool isRunning = false;
+	bool paused = false;
 	int cnt = 0;
 	SDL_Window* window;
 };

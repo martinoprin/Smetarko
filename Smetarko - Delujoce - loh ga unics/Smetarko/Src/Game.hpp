@@ -9,9 +9,13 @@ GameObject* pesek;
 std::vector<GameObject*> enemies;
 std::vector<GameObject*> trash;
 
-//int smer = rand() % 4; // nastavimo v katermo smer se premika enemy
+int level[3][2] = {
+	{5, 10},  //level 1
+	{10, 20},  //level 2
+	{15, 30}   //level 3
+};
+int lvl = 0;
 
-//int cas = rand() % 100; // koliko casa se bo enemy premikal v doloceno smer
 
 
 SDL_Renderer* Game::renderer = nullptr;
@@ -25,6 +29,9 @@ Game::~Game()
 void Game::init(const char* title, int width, int height, bool fullscreen)
 {
 	int flags = 0;
+
+	std::cout << "Enter player name: ";
+	std::cin >> name;
 
 	if (fullscreen)
 	{
@@ -42,14 +49,21 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 
 		isRunning = true;
 	}
-	player = new GameObject("assets/player.png", 0); 
-	pesek = new GameObject("assets/pesek2.png", 2);
+	player = new GameObject("assets/player.png", 0, 0); 
+	pesek = new GameObject("assets/pesek2.png", 2, 0);
 
-	for(int i = 0; i < 10; i++) {
-		trash.push_back(new GameObject("assets/trash.png", 0));
+	for(int i = 0; i < level[lvl][1]; i++) {
+		trash.push_back(new GameObject("assets/trash.png", 0, 0));
+		//std::cout << level[0][1];
+		//std::cout << level[1][1];
+		//std::cout << level[2][1];
+
 	}
-	for (int i = 0; i < 5; i++) {
-		enemies.push_back(new GameObject("assets/enemy.png", 1));
+	for (int i = 0; i < level[lvl][0]; i++) {
+		enemies.push_back(new GameObject("assets/enemy.png", 1, 0));
+		//std::cout << level[0][0];
+		//std::cout << level[1][0];
+		//std::cout << level[2][0];
 	}
 	
 }
@@ -59,6 +73,13 @@ void Game::handleEvents()
 	SDL_Event event;
 
 	SDL_PollEvent(&event);
+
+	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+	if (currentKeyStates[SDL_SCANCODE_F1]) {
+		paused = !paused;
+		//std::cout << paused << "\n";
+		SDL_Delay(100);
+	}
 
 	switch (event.type)
 	{
@@ -75,7 +96,7 @@ void Game::update()
 	player->UpdateMovement();
 	pesek->UpdatePesek();
 
-	for (int i = trash.size() - 1; i >= 0; i--) {
+	for (int i = 0; i < trash.size(); i++) {
 		trash[i]->UpdateSmeti();
 		if (checkCollision(player->getRect(), trash[i]->getRect())) {
 			delete trash[i];
@@ -84,9 +105,42 @@ void Game::update()
 	}
 	for (int i = 0; i < enemies.size(); i++) {
 		enemies[i]->Update();
+		if (enemies[i]->vrniXpos() == 875) {
+			if(enemies[i]->vrniCas() == 0)
+				trash.push_back(new GameObject("assets/trash.png", 4, enemies[i]->vrniYpos()));
+		}
 		if (checkCollision(player->getRect(), enemies[i]->getRect())) {
 			delete enemies[i];
 			enemies.erase(enemies.begin() + i);
+		}
+	}
+
+	if (enemies.size() == 0 && trash.size() == 0 && lvl == 2)
+		std::cout << "Konec igre";
+	if(enemies.size() == 0 && trash.size() == 0 && lvl<2) {
+		lvl++;
+
+
+		for (int i = 0; i < level[lvl][0]; i++) {
+			enemies.push_back(new GameObject("assets/enemy.png", 1, 0));
+		}
+		for (int i = 0; i < level[lvl][1]; i++) {
+			trash.push_back(new GameObject("assets/trash.png", 0, 0));
+		}
+	}
+	//enemies[0]->Follow(player);
+
+
+
+	for (int i = 0; i < enemies.size(); i++) {
+		for (int j = i + 1; j < enemies.size(); j++) {
+			if (checkCollision(enemies[i]->getRect(), enemies[j]->getRect())) {
+				//std::cout << "trk";
+				enemies[i]->Snap(enemies[j]);
+				if (checkCollision(player->getRect(), enemies[i]->getRect())) {
+					std::cout << "mrtu si!!!!!!!!";
+				}
+			}
 		}
 	}
 }
@@ -114,3 +168,5 @@ void Game::clean()
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
 }
+
+

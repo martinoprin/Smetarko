@@ -12,6 +12,7 @@ private:
 
 	bool isFlipped = false;
 	bool isSea_ = false;
+	bool follow = false;
 
 	SDL_Texture* objTexture;
 	SDL_Rect srcRect{}, destRect{};
@@ -20,7 +21,7 @@ private:
 	int cas;
 
 public:
-	GameObject(const char* textureSheet, int type);
+	GameObject(const char* textureSheet, int type, int yposs);
 	~GameObject(){}
 
 	SDL_Rect getRect()
@@ -35,6 +36,13 @@ public:
 
 	bool isSea() const { return isSea_; }
 	void SetIsSea(bool sea) { isSea_ = sea; }
+
+	int vrniXpos() const { return xpos; }
+	int vrniYpos() const { return ypos; }
+	int vrniCas() const { return cas; }
+
+	void Follow(GameObject* obj);
+	void Snap(GameObject* obj);
 
 };
 

@@ -1,24 +1,28 @@
 #include "GameObject.h"
 #include "TextureManager.h"
 
-GameObject::GameObject(const char* textureSheet, int type) {
+GameObject::GameObject(const char* textureSheet, int type, int yposs) {
     objTexture = TextureManager::LoadTexture(textureSheet);
-    if(type == 1)
+    if(type == 1) //kopno
     {
         xpos = rand() % 76 * 5 + 855;   //160 * 5 = 800      850 - 50 = 800
 		ypos = rand() % 135 * 5;        //134 * 5 = 670      720 - 50 = 670
 		isFlipped = true;
     }
 
-    else if (type == 0) 
+    else if (type == 0) //morje
     {
         xpos = rand() % 161 * 5;   //160 * 5 = 800      850 - 50 = 800
         ypos = rand() % 135 * 5;   //134 * 5 = 670      720 - 50 = 670
         isFlipped = true;
     }
-    else if (type == 2) {
+    else if (type == 2) { //pozicija peska
         xpos = 1230;
         ypos = 0;
+    }
+    else if (type == 4) { //smeti - ki jih odvrze enemy
+        xpos = 860;
+        ypos = yposs;
     }
     smer = rand() % 4;
     cas = rand() % 100;
@@ -103,7 +107,7 @@ void GameObject::Update() { //enemy movement
         smer = rand() % 4;
         cas = rand() % 100;
     }
-    std::cout << xpos << std::endl;
+
     //std::cout << cas << std::endl;
 
     srcRect.h = 100;
@@ -198,4 +202,27 @@ bool checkCollision(SDL_Rect a, SDL_Rect b)
     }
 
     return true;
+}
+
+void GameObject::Follow(GameObject* target) {
+
+    int dx = target->xpos - this->xpos;
+    int dy = target->ypos - this->ypos;
+
+    float length = sqrt(dx * dx + dy * dy);
+    if (length > 0) {
+        dx /= length;
+        dy /= length;
+    }
+
+    this->xpos += dx;
+    this->ypos += dy;
+
+    this->isFlipped = dx > 0;
+}
+
+void GameObject::Snap(GameObject* target) {
+
+    this->xpos = target->xpos;
+    this->ypos = target->ypos;
 }
