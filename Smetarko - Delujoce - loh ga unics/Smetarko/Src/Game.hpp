@@ -49,6 +49,23 @@ void Game::init(const char* title, int width, int height, bool fullscreen)
 
 		isRunning = true;
 	}
+	SDL_Surface* tempSurface = IMG_Load("assets/start_screen.png");
+	    if (tempSurface == nullptr)
+	    {
+	        std::cerr << "Failed to load start screen image! IMG_Error: " << IMG_GetError() << std::endl;
+	        isRunning = false;
+	        return;
+	    }
+	    startScreenTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+	    SDL_FreeSurface(tempSurface);
+	
+	    if (startScreenTexture == nullptr) 
+	    {
+	        std::cerr << "Failed to create start screen texture! SDL_Error: " << SDL_GetError() << std::endl;
+	        isRunning = false;
+	        return;
+	    }
+	
 	player = new GameObject("assets/player.png", 0, 0); 
 	pesek = new GameObject("assets/pesek2.png", 2, 0);
 
@@ -74,6 +91,11 @@ void Game::handleEvents()
 
 	SDL_PollEvent(&event);
 
+	if (showStartScreen) {
+            	if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_SPACE)
+            		showStartScreen = false;
+    	} 
+	else {
 	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 	if (currentKeyStates[SDL_SCANCODE_F1]) {
 		paused = !paused;
@@ -93,6 +115,8 @@ void Game::handleEvents()
 
 void Game::update()
 {
+	if (showStartScreen) return;
+	
 	player->UpdateMovement();
 	pesek->UpdatePesek();
 
@@ -153,17 +177,22 @@ void Game::render()
 	pesek->Render();
 	player->Render();
 
+	if (showStartScreen) {
+        SDL_RenderCopy(renderer, startScreenTexture, NULL, NULL);
+    	} else {
+
 	for(int i = 0; i < trash.size(); i++) 
-	{trash[i]->Render();}
+		{trash[i]->Render();}
 
 	for (int i = 0; i < enemies.size(); i++)
-	{enemies[i]->Render();}
-
+		{enemies[i]->Render();}
+	}
 	SDL_RenderPresent(renderer);
 }
 
 void Game::clean()
 {
+	SDL_DestroyTexture(startScreenTexture);
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
