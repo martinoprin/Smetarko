@@ -21,6 +21,8 @@ public:
 	void clean();
 
 	static SDL_Renderer* renderer;
+	void showStartScreen();
+	void hideStartScreen();
 
 private:
 	char name[20] = "Vegovec";
