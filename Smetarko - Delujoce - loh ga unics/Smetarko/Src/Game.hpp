@@ -198,4 +198,15 @@ void Game::clean()
 	SDL_Quit();
 }
 
+void Game::showStartScreen() {
+    showStartScreen = true;
+}
+
+void Game::hideStartScreen() {
+    showStartScreen = false;
+    if (startScreenTexture) {
+        SDL_DestroyTexture(startScreenTexture);
+        startScreenTexture = nullptr;
+    }
+}
 
